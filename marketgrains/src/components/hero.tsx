@@ -1,14 +1,21 @@
+import { useState } from 'react'
 export default function Hero(){
     return(
-        <section className="relative min-h-screen flex items-center justify-center bg-neutral-100">
+        <>
+        <section className="relative min-h-screen flex items-center justify-left bg-neutral-100">
             
             <HeroBackground />
 
             <HeroContent />
 
-            <Categories />
 
         </section>
+
+            <Categories />
+            <Products />
+        
+        </>
+        
     )
 }
 {/* Hero Background Component */ }
@@ -73,6 +80,7 @@ function Categories() {
     "Dovi",
     "Huchi",
   ];
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   return (
     <section className="py-16 bg-white">
@@ -86,7 +94,8 @@ function Categories() {
           {categories.map((cat) => (
             <div
               key={cat}
-              className="bg-gray-100 hover:bg-gray-200 transition rounded-xl py-8 font-semibold"
+              onClick={() => setSelectedCategory(cat)}
+              className={selectedCategory === cat ? "cursor-pointer bg-blue-500 text-white transition rounded-xl py-8 font-semibold" : "cursor-pointer bg-gray-100 hover:bg-gray-200 transition rounded-xl py-8 font-semibold"}
             >
               {cat}
             </div>
@@ -96,5 +105,36 @@ function Categories() {
       </div>
     </section>
   );
+}
+function Products(){
+    const products =[
+        {id: 1, name: "Mhunga", price: "$10.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
+        {id: 2, name: "Zviyo", price: "$12.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
+        {id: 3, name: "Mapfunde", price: "$9.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
+        {id: 4, name: "Dovi", price: "$14.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
+        {id: 5, name: "Huchi", price: "$19.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
+    ]
+    return(
+        <section className="py-16 bg-gray-50">
+            <div className="max-w-6xl mx-auto px-6">
+                <h3 className="text-3xl font-bold mb-10">
+                    Our Products
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {products.map((product) => (
+                        <div key={product.id} className="bg-white rounded-xl shadow-md overflow-hidden">
+                            <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
+                            <div className="p-4">
+                                <h4 className="text-xl font-bold">{product.name}</h4>
+                                <p className="text-lg font-semibold text-blue-600">{product.price}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+
+    )
 }
           
