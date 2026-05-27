@@ -1,5 +1,6 @@
 import { useState } from 'react'
 export default function Hero(){
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     return(
         <>
         <section className="relative min-h-screen flex items-center justify-left bg-neutral-100">
@@ -11,8 +12,12 @@ export default function Hero(){
 
         </section>
 
-            <Categories />
-            <Products />
+            <Categories 
+            selected={selectedCategory}
+            setSelected={setSelectedCategory}
+            />
+            
+            <Products selected={selectedCategory}/>
         
         </>
         
@@ -72,17 +77,18 @@ function HeroButtons(){
 
     )
 }
-function Categories() {
-  const categories = [
-    "Mhunga",
-    "Zviyo",
-    "Mapfunde",
-    "Dovi",
-    "Huchi",
+function Categories({ selected, setSelected }: 
+    { selected: string | null; setSelected: React.Dispatch<React.SetStateAction<string | null>>}) 
+    {
+        const categories = [
+        "Mhunga",
+        "Zviyo",
+        "Mapfunde",
+        "Dovi",
+        "Huchi",
   ];
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
   return (
+
     <section className="py-16 bg-white">
       <div className="max-w-6xl mx-auto px-6 text-center">
 
@@ -94,8 +100,10 @@ function Categories() {
           {categories.map((cat) => (
             <div
               key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={selectedCategory === cat ? "cursor-pointer bg-blue-500 text-white transition rounded-xl py-8 font-semibold" : "cursor-pointer bg-gray-100 hover:bg-gray-200 transition rounded-xl py-8 font-semibold"}
+              onClick={() => setSelected(cat)}
+              className={selected === cat ? "cursor-pointer bg-blue-500 text-white transition rounded-xl py-8 font-semibold" :
+                 "cursor-pointer bg-gray-100 hover:bg-gray-200 transition rounded-xl py-8 font-semibold"
+                }
             >
               {cat}
             </div>
@@ -106,14 +114,23 @@ function Categories() {
     </section>
   );
 }
-function Products(){
+function Products({ selected }: { selected: string | null }){
     const products =[
-        {id: 1, name: "Mhunga", price: "$10.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
-        {id: 2, name: "Zviyo", price: "$12.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
-        {id: 3, name: "Mapfunde", price: "$9.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
-        {id: 4, name: "Dovi", price: "$14.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
-        {id: 5, name: "Huchi", price: "$19.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"},
+        {id: 1,
+        name: "Mhunga",
+        price: "$10.99",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80",
+        category: "Mhunga",
+    },
+
+        {id: 2, name: "Zviyo", price: "$12.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80", category: "Zviyo"},
+        {id: 3, name: "Mapfu    nde", price: "$9.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80", category: "Mapfunde"},
+    {id: 4, name: "Dovi", price: "$14.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80", category: "Dovi"},
+        {id: 5, name: "Huchi", price: "$19.99", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80", category: "Huchi"},
     ]
+
+    const filtered = selected ? products.filter((p) => p.category === selected) : products;
+
     return(
         <section className="py-16 bg-gray-50">
             <div className="max-w-6xl mx-auto px-6">
@@ -121,7 +138,7 @@ function Products(){
                     Our Products
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {products.map((product) => (
+                    {filtered.map((product) => (
                         <div key={product.id} className="bg-white rounded-xl shadow-md overflow-hidden">
                             <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
                             <div className="p-4">
