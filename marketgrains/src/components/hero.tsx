@@ -1,10 +1,14 @@
 import { useState } from 'react'
 import Categories from './categories'
 import Products from './products'
+import Navbar from './Navbar'
 export default function Hero(){
+    const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     return(
         <>
+            <Navbar search={search} setSearch={setSearch} />
+            
         <section className="relative min-h-screen flex items-center justify-left bg-neutral-100">
             
             <HeroBackground />
@@ -19,7 +23,7 @@ export default function Hero(){
             setSelected={setSelectedCategory}
             />
             
-            <Products selected={selectedCategory}/>
+            <Products selected={selectedCategory} search={search}/>
         
         </>
         

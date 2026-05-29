@@ -7,6 +7,7 @@ export default function Categories({ selected, setSelected }:
         "Mapfunde",
         "Dovi",
         "Huchi",
+        "All"
   ];
   return (
 
@@ -21,7 +22,7 @@ export default function Categories({ selected, setSelected }:
           {categories.map((cat) => (
             <div
               key={cat}
-              onClick={() => setSelected(cat)}
+              onClick={() => setSelected(cat === "All" ? null : cat)}
               className={selected === cat ? "cursor-pointer bg-blue-500 text-white transition rounded-xl py-8 font-semibold" :
                  "cursor-pointer bg-gray-100 hover:bg-gray-200 transition rounded-xl py-8 font-semibold"
                 }

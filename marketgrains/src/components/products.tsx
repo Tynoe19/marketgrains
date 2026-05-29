@@ -1,9 +1,15 @@
 import products from '../data/products';  
 type ProductsProps = {
     selected: string | null;
+    search: string;
 };
-export default function Products({ selected }: ProductsProps){
-    const filtered = selected ? products.filter((p) => p.category === selected) : products;
+export default function Products({ selected, search }: ProductsProps){
+    
+    const filtered = products.filter((p) =>{
+        const categoryMatch = selected ? p.category === selected : true;
+        const searchMatch = search ? p.name.toLowerCase().includes(search.toLowerCase()) : true;
+        return categoryMatch && searchMatch;    
+    });
 
     return(
         <section className="py-16 bg-gray-50">
