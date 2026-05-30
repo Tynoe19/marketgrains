@@ -6,7 +6,7 @@ type NavbarProps = {
 };
 export default function Navbar( { search, setSearch }: NavbarProps) {
     return(
-        <nav className="w-full px-6 py-4 bg-white shadow-md flex items-center justify-between">
+        <nav className="w-full px-6 py-4 bg-white shadow-md flex flex-col sm:flex-row items-center justify-between">
             {/* Logo Section */ }
             <h1 className="text-2xl font-bold">
                 Elita-07
@@ -32,7 +32,7 @@ export default function Navbar( { search, setSearch }: NavbarProps) {
                     onChange={(e) => setSearch(e.target.value)}
                 />
                 </div>
-                
+
                 
                 
             </div>

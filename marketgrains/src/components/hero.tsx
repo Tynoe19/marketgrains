@@ -2,13 +2,19 @@ import { useState } from 'react'
 import Categories from './categories'
 import Products from './products'
 import Navbar from './Navbar'
+import  type { Product } from '../types/products'
 export default function Hero(){
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [cart, setCart] = useState<Product[]>([]);
+    const addToCart = (Product: Product) => {
+        console.log("Adding to cart:", Product);
+    setCart([...cart, Product]);
+};
     return(
         <>
             <Navbar search={search} setSearch={setSearch} />
-            
+
         <section className="relative min-h-screen flex items-center justify-left bg-neutral-100">
             
             <HeroBackground />
@@ -23,8 +29,8 @@ export default function Hero(){
             setSelected={setSelectedCategory}
             />
             
-            <Products selected={selectedCategory} search={search}/>
-        
+            <Products selected={selectedCategory} search={search} addToCart={addToCart}/>
+            
         </>
         
     )
@@ -83,4 +89,3 @@ function HeroButtons(){
 
     )
 }
-

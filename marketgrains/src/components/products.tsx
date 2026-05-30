@@ -1,9 +1,11 @@
-import products from '../data/products';  
+import products from '../data/products'; 
+import type { Product } from '../types/products';    
 type ProductsProps = {
     selected: string | null;
     search: string;
+    addToCart: (product: Product) => void;
 };
-export default function Products({ selected, search }: ProductsProps){
+export default function Products({ selected, search, addToCart }: ProductsProps){
     
     const filtered = products.filter((p) =>{
         const categoryMatch = selected ? p.category === selected : true;
@@ -25,6 +27,10 @@ export default function Products({ selected, search }: ProductsProps){
                             alt={product.name}
                             className="w-full h-48 object-cover"
                             />
+                            <button className="bg-green-600 text-white px-4 py-2 rounded"
+                            onClick={() => addToCart(product)}>
+                                Add to Cart
+                            </button>
                             <div className="p-4">
                                 <h4 className="text-xl font-bold">{product.name}</h4>
                                 <p className="text-lg font-semibold text-blue-600">{product.price}</p>
