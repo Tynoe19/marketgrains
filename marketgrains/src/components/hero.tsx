@@ -2,15 +2,14 @@ import { useState } from 'react'
 import Categories from './categories'
 import Products from './products'
 import Navbar from './Navbar'
-import  type { Product } from '../types/products'
+import { useCart } from '../context/cartContext';
+
 export default function Hero(){
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [cart, setCart] = useState<Product[]>([]);
-    const addToCart = (Product: Product) => {
-        console.log("Adding to cart:", Product);
-    setCart([...cart, Product]);
-};
+    const { cart } = useCart();
+    console.log("Cart contents:", cart);
+
     return(
         <>
             <Navbar search={search} setSearch={setSearch} />
@@ -29,7 +28,7 @@ export default function Hero(){
             setSelected={setSelectedCategory}
             />
             
-            <Products selected={selectedCategory} search={search} addToCart={addToCart}/>
+            <Products selected={selectedCategory} search={search} />
             
         </>
         

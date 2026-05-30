@@ -1,12 +1,12 @@
 import products from '../data/products'; 
-import type { Product } from '../types/products';    
+import { useCart } from '../context/cartContext';
 type ProductsProps = {
     selected: string | null;
     search: string;
-    addToCart: (product: Product) => void;
 };
-export default function Products({ selected, search, addToCart }: ProductsProps){
-    
+export default function Products({ selected, search }: ProductsProps){
+    const { addToCart } = useCart();
+
     const filtered = products.filter((p) =>{
         const categoryMatch = selected ? p.category === selected : true;
         const searchMatch = search ? p.name.toLowerCase().includes(search.toLowerCase()) : true;

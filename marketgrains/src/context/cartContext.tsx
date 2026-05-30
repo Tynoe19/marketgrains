@@ -12,6 +12,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const [cart, setCart] = useState<Product[]>([]);
 
     const addToCart = (product: Product) => {
+        const exists = cart.find((item) => item.id === product.id);
+        if (exists) {
+            alert("Product is already in the cart!");
+            return;
+        }
         setCart((prev) => [...prev, product]);
     };
 

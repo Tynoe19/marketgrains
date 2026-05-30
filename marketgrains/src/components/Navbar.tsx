@@ -1,10 +1,11 @@
-
+import { useCart } from '../context/cartContext';   
 type NavbarProps = {
     search: string;
     setSearch: (value: string) => void; 
     // You can add props here if needed in the future
 };
 export default function Navbar( { search, setSearch }: NavbarProps) {
+    const { cart } = useCart();
     return(
         <nav className="w-full px-6 py-4 bg-white shadow-md flex flex-col sm:flex-row items-center justify-between">
             {/* Logo Section */ }
@@ -19,6 +20,11 @@ export default function Navbar( { search, setSearch }: NavbarProps) {
                 <a href="">About</a>
                 <a href="">Contact</a>
                 <a href="">Cart</a>
+            </div>
+            <div className="relative"> 
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                    {cart.length}
+                </span>
             </div>
 
             { /* Search Section */ }
