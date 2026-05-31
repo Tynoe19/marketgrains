@@ -3,6 +3,7 @@ import Categories from './categories'
 import Products from './products'
 import Navbar from './Navbar'
 import { useCart } from '../context/cartContext';
+import Packages from './packages';
 
 export default function Hero(){
     const [search, setSearch] = useState("");
@@ -29,7 +30,7 @@ export default function Hero(){
             />
             
             <Products selected={selectedCategory} search={search} />
-            
+            <Packages />
         </>
         
     )
@@ -82,7 +83,7 @@ function HeroButtons(){
             </button>
 
             <button className="border border-white/40 hover:bg-white/20 text-white font-bold py-3 px-7 rounded-full">
-                        Learn More
+                        Explore Packages
             </button>
         </div>
 
