@@ -3,8 +3,8 @@
     import zviyo from "../assets/images/zviyo.jpg";
     import mhunga from "../assets/images/mhunga.jpg";
     import huchi from "../assets/images/huchi.jpg";
-    import type { product } from "../types/products";
-    const products: product[] =[
+    import type { Product } from "../types/products";
+    const products: Product[] =[
         {id: 1,
         name: "Mhunga",
         price: "$10.99",
