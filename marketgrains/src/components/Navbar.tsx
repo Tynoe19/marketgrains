@@ -20,45 +20,52 @@ export default function Navbar( { search, setSearch }: NavbarProps) {
 
     return(
         <nav
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}
+            className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white shadow-md text-black' : 'bg-transparent text-white'}`}
         >
-            <div className="flex items-center justify-between px-6 py-4">
+            <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
             <div className="text-2xl font-bold">
                 Elita-07
             </div>
 
             {/* Navigation Links */ }
-            <div className="hidden md:flex gap-4">
+            <div className="hidden md:flex gap-6 font-medium">
                 <a href="">Home</a>
                 <a href="">Products</a>
                 <a href="">About</a>
                 <a href="">Contact</a>
-                <a href="">Cart</a>
-            </div>
-            {/* Cart Icon with Item Count */ }
-            <div>
-                <button className="px-4 py-2 border rounded">
-                    Cart
-                </button>
-            </div>
-            
-        </div>
+                </div>
 
-            { /* Search Section */ }
-            <div className="relative flex items-center gap-4">
-                <div>
+                { /* right side with search and cart */ }
+
+                  <div className="flex items-center gap-4">
+                    {/* Search Bar */ }
+                
                     <input
                     type="text"
                     placeholder="Search..."
-                    className="border px-3 py-1 rounded-md w-40 md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="border px-3 py-1 rounded-md w-40 md:w-64 transition-all duration-300 focus:outline-none focus:ring-2 
+                    ${scrolled ? 'border-gray-300 text-black focus:ring-blue-500' : 'border-white/40 bg-transparent text-white placeholder:text-white/60 focus:ring-white'}"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
+                <button className="relative px-3 py-1 rounded-md bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors">
+                    Cart
+                {cart.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                        {cart.length}
+                    </span>
+                )}
+                
+                </button>
+
                 </div>
 
                 
                 
             </div>
+            
+           
+          
         </nav>
     )
 }

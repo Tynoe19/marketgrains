@@ -1,13 +1,13 @@
 
 import './App.css'
-import Hero from './components/hero'
+import HomePage from './components/homePage'
 
 function App() {
   
 
   return (
     <>
-      <Hero />
+      <HomePage />
     </>
   )
 }

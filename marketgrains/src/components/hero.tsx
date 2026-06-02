@@ -1,47 +1,26 @@
-import { useState } from 'react'
-import Categories from './categories'
-import Products from './products'
-import Navbar from './Navbar'
-import { useCart } from '../context/cartContext';
-import Packages from './packages';
-
-export default function Hero(){
-    const [search, setSearch] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const { cart } = useCart();
-    console.log("Cart contents:", cart);
+import mapfunde from "../assets/images/mapfunde.jpg";
+export default function Hero() {
 
     return(
-        <>
-            
 
         <section className="relative min-h-screen flex items-center justify-left bg-neutral-100">
-            <div className=""></div>
             <HeroBackground />
 
-            <HeroContent />
-            <Navbar  search={search} setSearch={setSearch} />
-
-
+            <div className="relative z-10 w-full">
+                <HeroContent />
+            </div>
         </section>
-
-            <Categories 
-            selected={selectedCategory}
-            setSelected={setSelectedCategory}
-            />
-            
-            <Products selected={selectedCategory} search={search} />
-            <Packages />
-        </>
-        
-    )
+    
+    );
 }
+         
+  
 {/* Hero Background Component */ }
 function HeroBackground() {
     return(
-        <div className="absolute inset-0 bg-black/40">
+        <div className="absolute inset-0 ">
                 <img
-                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW5zfGVufDB8fDB8fHww&w=1000&q=80"
+                    src={mapfunde}
                     alt="Grains background"
                     className="w-full h-full object-cover"
                 />
@@ -53,12 +32,10 @@ function HeroBackground() {
 {/* Hero Content Component */ }
 function HeroContent(){
     return(
-    <div className="relative z-10 text-lefttext-white max-w-2l padding-8">
-        <div className="max-w-4xl text-left text-white">
+    <div className="px-8 text-left text-white max-w-6xl mx-auto">
             <HeroTitle />
             <HeroText />
             <HeroButtons />
-        </div>
     </div>
     )
 }
@@ -66,7 +43,7 @@ function HeroContent(){
 {/* Hero Title, Text, and Buttons Components */ }
 function HeroTitle(){
     return (
-        <h2 className="text-7xl md:text-6xl font-bold leading-tight mb-6">
+        <h2 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
             Organic Traditional Grains
             <span className="text-green-600 italic" >. For homes and Distributors</span>
         </h2>
@@ -92,3 +69,4 @@ function HeroButtons(){
 
     )
 }
+
