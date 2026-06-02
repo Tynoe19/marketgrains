@@ -1,5 +1,6 @@
 import { useCart } from '../context/cartContext';   
 import { useEffect, useState } from 'react';
+import { FiMenu, FiX } from 'react-icons/fi';
 type NavbarProps = {
     search: string;
     setSearch: (value: string) => void; 
@@ -8,6 +9,7 @@ type NavbarProps = {
 export default function Navbar( { search, setSearch }: NavbarProps) {
     const { cart } = useCart();
     const [scrolled, setScrolled] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -34,6 +36,13 @@ export default function Navbar( { search, setSearch }: NavbarProps) {
                 <a href="">About</a>
                 <a href="">Contact</a>
                 </div>
+                {menuOpen && (
+                    <div className=" flex flex-col items-center md:hidden px-6 pb-4">
+                        <a href="" >Home</a>
+                        <a href="" >Products</a>
+                        <a href="" >Contact</a>
+                    </div>
+                )}
 
                 { /* right side with search and cart */ }
 
@@ -43,8 +52,8 @@ export default function Navbar( { search, setSearch }: NavbarProps) {
                     <input
                     type="text"
                     placeholder="Search..."
-                    className="border px-3 py-1 rounded-md w-40 md:w-64 transition-all duration-300 focus:outline-none focus:ring-2 
-                    ${scrolled ? 'border-gray-300 text-black focus:ring-blue-500' : 'border-white/40 bg-transparent text-white placeholder:text-white/60 focus:ring-white'}"
+                    className={`border px-3 py-1 rounded-md w-40 md:w-64 transition-all duration-300 focus:outline-none focus:ring-2 
+                    ${scrolled ? 'border-gray-300 text-black bg-white focus:ring-blue-500' : 'border-white/40 bg-white/20 text-white placeholder:text-white/70 focus:ring-white'}`}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
@@ -57,7 +66,15 @@ export default function Navbar( { search, setSearch }: NavbarProps) {
                 )}
                 
                 </button>
+                <button className="md:hidden text-2xl"
+                onClick={() => setMenuOpen(!menuOpen)}
+                >
+                    {menuOpen ? <FiX /> : <FiMenu />}
 
+                    </button>
+
+
+    
                 </div>
 
                 
