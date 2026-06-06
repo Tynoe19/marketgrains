@@ -11,13 +11,14 @@ import Footer from "./Footer";
 
 export default function HomePage() {
   const [search, setSearch] = useState<string>("");
+  const [selected, setSelected] = useState<string | null>(null);  
 
   return (
     <>
       <Navbar search={search} setSearch={setSearch} />
       <Hero />
-      <Categories selected={null} setSelected={() => {}} />
-      <Products selected={null} search={search} />
+      <Categories selected={selected} setSelected={setSelected} />
+      <Products selected={selected} search={search} />
       <Packages />
       <WhyDistributor />
       <Testimonials />

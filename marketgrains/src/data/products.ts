@@ -7,36 +7,36 @@
     const products: Product[] =[
         {id: 1,
         name: "Mhunga",
-        price: "$10.99",
+        price: "10.99",
         image: mhunga,
-        category: "Mhunga",
+        category: "mhunga",
     },
 
         {id: 2,
         name: "Zviyo",
-        price: "$12.99",
+        price: "12.99",
         image: zviyo,
-        category: "Zviyo"
+        category: "zviyo"
     },
         {id: 3,
         name: "Mapfunde",
-        price: "$9.99",
+        price: "9.99",
         image: mapfunde,
-        category: "Mapfunde"
+        category: "mapfunde"
     },
     {
         id: 4,
         name: "Dovi",
-        price: "$14.99",
+        price: "14.99",
         image: Dovi,
-        category: "Dovi"
+        category: "dovi"
     },
     {
         id: 5,
         name: "Huchi",
-        price: "$19.99",
+        price: "19.99",
         image: huchi,
-        category: "Huchi"
+        category: "huchi"
     }
 ]
 export default products;

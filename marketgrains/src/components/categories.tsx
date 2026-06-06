@@ -1,16 +1,25 @@
-export default function Categories({ selected, setSelected }: 
-    { selected: string | null; setSelected: React.Dispatch<React.SetStateAction<string | null>>}) 
-    {
-        const categories = [
-        "Mhunga",
-        "Zviyo",
-        "Mapfunde",
-        "Dovi",
-        "Huchi",
-        "All"
-  ];
-  return (
+type Category = {
+  label: string;
+  value: string | null;
+};
 
+export default function Categories({
+  selected,
+  setSelected,
+}: {
+  selected: string | null;
+  setSelected: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
+  const categories: Category[] = [
+    { label: "All", value: null },
+    { label: "Mhunga", value: "mhunga" },
+    { label: "Zviyo", value: "zviyo" },
+    { label: "Mapfunde", value: "mapfunde" },
+    { label: "Dovi", value: "dovi" },
+    { label: "Huchi", value: "huchi" },
+  ];
+
+  return (
     <section className="py-16 bg-white">
       <div className="max-w-6xl mx-auto px-6 text-center">
 
@@ -18,18 +27,27 @@ export default function Categories({ selected, setSelected }:
           Shop by Category
         </h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-          {categories.map((cat) => (
-            <div
-              key={cat}
-              onClick={() => setSelected(cat === "All" ? null : cat)}
-              className={selected === cat ? "cursor-pointer bg-blue-500 text-white transition rounded-xl py-8 font-semibold" :
-                 "cursor-pointer bg-gray-100 hover:bg-gray-200 transition rounded-xl py-8 font-semibold"
-                }
-            >
-              {cat}
-            </div>
-          ))}
+        <div className="flex flex-wrap justify-center gap-4">
+          {categories.map((cat) => {
+            const isActive = selected === cat.value;
+
+            return (
+              <button
+                key={cat.label}
+                onClick={() => {
+                  console.log("SELECTED CATEGORY:", cat.value);
+                  setSelected(cat.value);
+                }}
+                className={`px-5 py-2 rounded-full font-medium transition border ${
+                  isActive
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-gray-100 hover:bg-gray-200 border-gray-200"
+                }`}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
         </div>
 
       </div>
