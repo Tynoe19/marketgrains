@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+/* Smooth scrolling when clicking nav links */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Brand palette — reuse these across sections for a consistent look */
+:root {
+  --brand-green: #15803d;
+  --brand-green-dark: #166534;
+  --brand-amber: #d97706;
+  --brand-earth: #78350f;
+}

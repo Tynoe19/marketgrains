@@ -1,64 +1,83 @@
-import products from '../data/products'; 
-import { useCart } from '../context/cartContext';
-console.log("🔥 PRODUCTS COMPONENT IS MOUNTED");
+import products from "../data/products";
+import { useCart } from "../context/cartContext";
+
 type ProductsProps = {
-    selected: string | null;
-    search: string;
+  selected: string | null;
+  search: string;
 };
-export default function Products({ selected, search }: ProductsProps){
-    const { addToCart } = useCart();
 
-    const filtered = products.filter((p) =>{
-        const categoryMatch = selected 
-            ? p.category.toLowerCase() === selected.toLowerCase()
-            : true;
+export default function Products({ selected, search }: ProductsProps) {
+  const { addToCart } = useCart();
 
-        const searchMatch = search 
-            ? p.name.toLowerCase().includes(search.toLowerCase()) 
-            : true;
-        return categoryMatch && searchMatch;    
-    });
-    console.log("PRODUCTS SELECTED:", selected);
+  // .filter() creates a new array with only items that pass both checks
+  const filtered = products.filter((product) => {
+    const categoryMatch = selected
+      ? product.category.toLowerCase() === selected.toLowerCase()
+      : true;
 
-    console.log("FILTERED:", filtered);
-    console.log("ALL PRODUCTS:", products);
+    const searchMatch = search
+      ? product.name.toLowerCase().includes(search.toLowerCase())
+      : true;
 
-    return(
-        <section className="py-16 bg-gray-50">
-            <div className="max-w-6xl mx-auto px-6">
-                <h3 className="text-3xl text-center font-bold mb-10">
-                    Featured Products
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filtered.map((product) => (
-                        <div key={product.id} className="bg-white rounded-xl shadow-md overflow-hidden">
-                            <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-48 object-cover"
-                            />
-                            
-                            <div className="flex flex-col p-4 gap-3">
-                                <h4 className="text-lg font-semibold text-blue-600">
-                                    {product.name}
-                                </h4>
-                                <div className="flex items-center justify-between pt-2 border-t">
+    return categoryMatch && searchMatch;
+  });
 
-                                <p className="text-lg font-semibold text-blue-600">${product.price }</p>
-                                </div>
-                                
-                                <button className="bg-green-600 py-2 px-4 items-center rounded-full transition hover:bg-green-700 text-white inline-block mt-4 self-start"
-                                    onClick={() => addToCart(product)}>
-                                    Add to Cart
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+  return (
+    <section id="products" className="py-20 bg-gray-50 scroll-mt-20">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <p className="text-sm font-semibold text-green-600 uppercase tracking-wider mb-3">
+            For Buyers
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Featured Products
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Purchase individual grains and spreads for your home. Add items to
+            your cart and check out when you&apos;re ready.
+          </p>
+        </div>
+
+        {filtered.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200">
+            <p className="text-gray-500 text-lg">No products match your search.</p>
+            <p className="text-gray-400 text-sm mt-2">Try a different category or search term.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filtered.map((product) => (
+              <article
+                key={product.id}
+                className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="relative overflow-hidden h-52">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-green-700 capitalize">
+                    {product.category}
+                  </span>
                 </div>
-            </div>
-        </section>
 
+                <div className="p-5">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{product.name}</h3>
+                  <p className="text-2xl font-bold text-green-600 mb-4">${product.price}</p>
 
-    )
+                  <button
+                    type="button"
+                    onClick={() => addToCart(product)}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl transition-colors"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
-          

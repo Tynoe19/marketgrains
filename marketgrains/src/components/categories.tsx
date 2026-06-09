@@ -20,28 +20,32 @@ export default function Categories({
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-6 text-center">
-
-        <h3 className="text-3xl font-bold mb-10">
+    <section className="py-12 bg-white border-b border-gray-100">
+      <div className="max-w-6xl mx-auto px-6">
+        <p className="text-center text-sm font-semibold text-green-600 uppercase tracking-wider mb-3">
+          Browse
+        </p>
+        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
           Shop by Category
-        </h3>
+        </h2>
 
-        <div className="flex flex-wrap justify-center gap-4">
+        {/* 
+          Filter buttons: clicking one updates `selected` in HomePage,
+          which Products reads to show only matching items.
+        */}
+        <div className="flex flex-wrap justify-center gap-3">
           {categories.map((cat) => {
             const isActive = selected === cat.value;
 
             return (
               <button
                 key={cat.label}
-                onClick={() => {
-                  console.log("SELECTED CATEGORY:", cat.value);
-                  setSelected(cat.value);
-                }}
-                className={`px-5 py-2 rounded-full font-medium transition border ${
+                type="button"
+                onClick={() => setSelected(cat.value)}
+                className={`px-5 py-2.5 rounded-full font-medium transition-all border ${
                   isActive
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "bg-gray-100 hover:bg-gray-200 border-gray-200"
+                    ? "bg-green-600 text-white border-green-600 shadow-md shadow-green-600/20"
+                    : "bg-gray-50 text-gray-700 border-gray-200 hover:border-green-300 hover:text-green-700"
                 }`}
               >
                 {cat.label}
@@ -49,7 +53,6 @@ export default function Categories({
             );
           })}
         </div>
-
       </div>
     </section>
   );
