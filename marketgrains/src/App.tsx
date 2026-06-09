@@ -1,7 +1,13 @@
 import HomePage from "./components/homePage";
+import CartDrawer from "./components/CartDrawer";
 
 function App() {
-  return <HomePage />;
+  return (
+    <>
+      <HomePage />
+      <CartDrawer />
+    </>
+  );
 }
 
 export default App;

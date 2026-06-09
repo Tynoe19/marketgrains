@@ -16,7 +16,7 @@ const navLinks = [
 ];
 
 export default function Navbar({ search, setSearch }: NavbarProps) {
-  const { cart } = useCart();
+  const { cartCount, openCart } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -83,12 +83,13 @@ export default function Navbar({ search, setSearch }: NavbarProps) {
 
             <button
               type="button"
+              onClick={openCart}
               className="relative px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700 transition-colors"
             >
               Cart
-              {cart.length > 0 && (
+              {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                  {cart.length}
+                  {cartCount}
                 </span>
               )}
             </button>
