@@ -5,8 +5,8 @@
  * When Django is ready, set in .env:
  *   VITE_API_URL=http://localhost:8000
  */
-export const API_URL = import.meta.env.VITE_API_URL ?? "";
-
+export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api/";
+// custom error class to include HTTP status code
 export class ApiError extends Error {
   status: number;
 
