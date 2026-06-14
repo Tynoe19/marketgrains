@@ -4,10 +4,9 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     # Add any additional fields you need for your user model
     ROLE_CHOICES = (
-        ('Admin', 'Admin'),
-        ('Distributor', 'Distributor'),
-        ('Farmer', 'Farmer'),
+        ('buyer', 'Buyer'),
+        ('distributor', 'Distributor'),
+        ('farmer', 'Farmer'),
     )
-    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='Distributor')
-
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='distributor')
 
