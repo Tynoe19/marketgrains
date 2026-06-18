@@ -1,9 +1,9 @@
-export type UserRole = "buyer" | "distributor";
+export type UserRole = "buyer" | "distributor" | "admin";
 
 export type User = {
   id: number;
   email: string;
-  name: string;
+  username: string;
   role: UserRole;
 };
 
@@ -20,7 +20,7 @@ export type LoginCredentials = {
 };
 
 export type RegisterCredentials = LoginCredentials & {
-  name: string;
+  username: string;
   role: UserRole;
 };
 

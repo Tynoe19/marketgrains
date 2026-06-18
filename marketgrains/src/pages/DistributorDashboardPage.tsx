@@ -31,7 +31,7 @@ export default function DistributorDashboardPage() {
               Distributor Portal
             </p>
             <h1 className="text-3xl font-bold text-gray-900">
-              Welcome, {user?.name}
+              Welcome, {user?.username}
             </h1>
             <p className="text-gray-500 mt-1">
               Track orders, profits, and your recruitment network.

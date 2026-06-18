@@ -130,7 +130,7 @@ export default function Navbar({
                 <span
                   className={`hidden md:block text-sm font-medium truncate max-w-[120px] ${linkClass}`}
                 >
-                  {user?.name}
+                  {user?.username}
                 </span>
                 <button
                   type="button"
@@ -202,7 +202,7 @@ export default function Navbar({
                   </Link>
                 )}
                 <span className={`text-left font-medium py-1 ${linkClass}`}>
-                  {user?.name}
+                  {user?.username}
                 </span>
                 <button
                   type="button"

@@ -1,8 +1,8 @@
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect } from "react";
+import type { FormEvent } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/authContext";
-import { isUsingMockAuth } from "../services/authService";
 import type { UserRole } from "../types/auth";
 
 type AuthMode = "login" | "register";
@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [mode, setMode] = useState<AuthMode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,7 +34,7 @@ export default function LoginPage() {
     }
   }, [isAuthenticated, user, navigate, redirectTo]);
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
     setIsSubmitting(true);
@@ -45,7 +45,7 @@ export default function LoginPage() {
       if (mode === "login") {
         user = await login({ email, password });
       } else {
-        user = await register({ email, password, name, role });
+        user = await register({ email, password, username, role });
       }
 
       // Redirect based on role and where they came from
@@ -79,14 +79,6 @@ export default function LoginPage() {
                 : "Register to access wholesale packages and earn commissions."}
             </p>
           </div>
-
-          {isUsingMockAuth() && (
-            <div className="mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-sm">
-              <p className="font-semibold mb-2">Demo accounts (mock auth)</p>
-              <p>Buyer: buyer@demo.com / demo123</p>
-              <p>Distributor: distributor@demo.com / demo123</p>
-            </div>
-          )}
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
             <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-xl mb-6">
@@ -123,15 +115,15 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {mode === "register" && (
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Full name
+                  <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                    Username
                   </label>
                   <input
-                    id="name"
+                    id="username"
                     type="text"
                     required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="Tendai Moyo"
                   />

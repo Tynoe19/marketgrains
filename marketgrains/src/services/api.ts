@@ -5,6 +5,10 @@
  * When Django is ready, set in .env:
  *   VITE_API_URL=http://localhost:8000
  */
+const isAuthRoute = (path: string) =>
+  path.startsWith("accounts/login/") ||
+  path.startsWith("accounts/register/");
+
 export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api/";
 // custom error class to include HTTP status code
 export class ApiError extends Error {
@@ -25,7 +29,9 @@ export async function apiFetch<T>(
 
   const headers: HeadersInit = {
     "Content-Type": "application/json",
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(!isAuthRoute(path) && token
+      ? { Authorization: `Bearer ${token}` }
+      : {}),
     ...options.headers,
   };
 
@@ -38,7 +44,7 @@ export async function apiFetch<T>(
     let message = "Something went wrong";
     try {
       const data = await response.json();
-      message = data.detail || data.message || message;
+      message = data.detail || data.message || data.non_field_errors?.[0] || message;
     } catch {
       // response wasn't JSON
     }
