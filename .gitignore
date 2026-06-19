@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Django local files
+*.sqlite3
+db.sqlite3
+
+# Node
+node_modules/
+
+# Frontend build output
+dist/
+build/
+
+# Environment variables
+.env
+.env.*
+
+# Editor files
+.vscode/
+.idea/
+
