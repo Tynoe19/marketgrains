@@ -1,14 +1,27 @@
-from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .models import Product
 from .serializers import ProductSerializer  
+
+
+class IsAdminOrReadOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return bool(
+            request.user
+            and request.user.is_authenticated
+            and (request.user.is_staff or request.user.role == 'admin')
+        )
+
 
 class ProductListCreateView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-# Create your views here.
+    permission_classes = [IsAdminOrReadOnly]
