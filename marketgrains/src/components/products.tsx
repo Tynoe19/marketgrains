@@ -1,5 +1,7 @@
-import products from "../data/products";
+import { useEffect, useState } from "react";
 import { useCart } from "../context/cartContext";
+import { getProducts } from "../services/productService";
+import type { Product } from "../types/products";
 
 type ProductsProps = {
   selected: string | null;
@@ -8,6 +10,24 @@ type ProductsProps = {
 
 export default function Products({ selected, search }: ProductsProps) {
   const { addToCart } = useCart();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Could not load products.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadProducts();
+  }, []);
 
   // .filter() creates a new array with only items that pass both checks
   const filtered = products.filter((product) => {
@@ -38,7 +58,16 @@ export default function Products({ selected, search }: ProductsProps) {
           </p>
         </div>
 
-        {filtered.length === 0 ? (
+        {isLoading ? (
+          <div className="text-center py-16 bg-white rounded-2xl border border-gray-100">
+            <p className="text-gray-500 text-lg">Loading products...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-16 bg-white rounded-2xl border border-red-100">
+            <p className="text-red-600 text-lg">{error}</p>
+            <p className="text-gray-400 text-sm mt-2">Make sure the Django backend is running.</p>
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200">
             <p className="text-gray-500 text-lg">No products match your search.</p>
             <p className="text-gray-400 text-sm mt-2">Try a different category or search term.</p>

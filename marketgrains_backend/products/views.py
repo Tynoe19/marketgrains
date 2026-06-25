@@ -16,9 +16,17 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
 
 class ProductListCreateView(generics.ListCreateAPIView):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+    def get_queryset(self):
+        if (
+            self.request.user.is_authenticated
+            and (self.request.user.is_staff or self.request.user.role == 'admin')
+        ):
+            return Product.objects.all()
+
+        return Product.objects.filter(is_active=True)
 
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
