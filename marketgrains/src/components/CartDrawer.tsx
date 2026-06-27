@@ -1,8 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FiX, FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 import { useCart } from "../context/cartContext";
+import { createOrder } from "../services/orderService";
 
 export default function CartDrawer() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const {
     cart,
     cartCount,
@@ -13,6 +18,32 @@ export default function CartDrawer() {
     updateQuantity,
     clearCart,
   } = useCart();
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+  const [checkoutSuccess, setCheckoutSuccess] = useState("");
+
+  const handleCheckout = async () => {
+    setCheckoutError("");
+    setCheckoutSuccess("");
+
+    if (!isAuthenticated) {
+      closeCart();
+      navigate("/login");
+      return;
+    }
+
+    setIsCheckingOut(true);
+
+    try {
+      const order = await createOrder(cart);
+      clearCart();
+      setCheckoutSuccess(`Order #${order.id} created successfully.`);
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : "Checkout failed.");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
   // Close drawer on Escape key — standard UX for modals/drawers
   useEffect(() => {
@@ -72,6 +103,11 @@ export default function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
+              {checkoutSuccess && (
+                <div className="mb-4 rounded-xl border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700">
+                  {checkoutSuccess}
+                </div>
+              )}
               <p className="text-gray-500 text-lg mb-2">Your cart is empty</p>
               <p className="text-gray-400 text-sm mb-6">
                 Add some grains from the products section.
@@ -91,11 +127,17 @@ export default function CartDrawer() {
                   key={product.id}
                   className="flex gap-4 p-3 rounded-xl border border-gray-100 bg-gray-50/50"
                 >
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-20 h-20 rounded-lg object-cover shrink-0"
-                  />
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-20 h-20 rounded-lg object-cover shrink-0"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 rounded-lg bg-green-50 text-green-700 shrink-0 flex items-center justify-center font-bold">
+                      {product.name.charAt(0)}
+                    </div>
+                  )}
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
@@ -149,6 +191,11 @@ export default function CartDrawer() {
         {/* Footer with total and actions */}
         {cart.length > 0 && (
           <div className="border-t border-gray-100 px-6 py-5 space-y-4 bg-white">
+            {checkoutError && (
+              <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {checkoutError}
+              </div>
+            )}
             <div className="flex items-center justify-between">
               <span className="text-gray-600">Subtotal</span>
               <span className="text-2xl font-bold text-gray-900">
@@ -158,9 +205,11 @@ export default function CartDrawer() {
 
             <button
               type="button"
-              className="w-full py-3.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors"
+              onClick={handleCheckout}
+              disabled={isCheckingOut}
+              className="w-full py-3.5 rounded-xl bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-semibold transition-colors"
             >
-              Proceed to Checkout
+              {isCheckingOut ? "Creating Order..." : "Proceed to Checkout"}
             </button>
 
             <div className="flex gap-3">
