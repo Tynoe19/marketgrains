@@ -1,6 +1,6 @@
-# MarketGrains
+# Elita07 grains market place
 
-MarketGrains is a full-stack web application for browsing and selling organic grain products. The frontend is built with React, TypeScript, and Vite, while the backend uses Django REST Framework with JWT authentication.
+Elita07 is a full-stack web application for browsing and selling organic grain products. The frontend is built with React, TypeScript, and Vite, while the backend uses Django REST Framework with JWT authentication.
 
 The project currently supports buyer and distributor accounts, product browsing, cart interactions, protected distributor routes, and token-based authentication.
 
