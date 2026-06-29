@@ -47,14 +47,14 @@ export default function WhyDistributor() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
           <p className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-3">
-            Why MarketGrains
+            Why join Elita07?
           </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             A marketplace built for buyers &amp; distributors
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Whether you&apos;re stocking your pantry or building a grain business,
-            MarketGrains has a path for you.
+            Elita07 has a path for you.
           </p>
         </div>
 

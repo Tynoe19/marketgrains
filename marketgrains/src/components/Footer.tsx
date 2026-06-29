@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           <div>
             <p className="text-2xl font-bold text-white mb-3">
-              Market<span className="text-green-500">Grains</span>
+              Elita<span className="text-green-500">07</span>
             </p>
             <p className="text-sm leading-relaxed">
               Organic traditional grains marketplace connecting home buyers with
@@ -42,15 +42,15 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-sm">
-              <li>hello@marketgrains.com</li>
-              <li>+263 77 000 0000</li>
-              <li>Harare, Zimbabwe</li>
+              <li>Elita07@zw.com</li>
+              <li>+263 777826240</li>
+              <li>Buhera, Zimbabwe</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 pt-8 text-sm text-center">
-          <p>&copy; {new Date().getFullYear()} MarketGrains. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Elita07. All rights reserved.</p>
         </div>
       </div>
     </footer>

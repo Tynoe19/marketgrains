@@ -73,7 +73,7 @@ export default function Navbar({
             to="/"
             className="text-xl md:text-2xl font-bold tracking-tight shrink-0"
           >
-            Market<span className="text-green-600">Grains</span>
+            Elita<span className="text-green-600">07</span>
           </Link>
 
           <div className="hidden lg:flex items-center gap-8 font-medium">

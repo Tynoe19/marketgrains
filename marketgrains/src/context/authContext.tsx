@@ -50,6 +50,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    const onTokenRefreshed = () => {
+      const storedToken = getStoredToken();
+      if (storedToken) setToken(storedToken);
+    };
+
+    const onSessionExpired = () => {
+      setUser(null);
+      setToken(null);
+    };
+
+    window.addEventListener("auth:token-refreshed", onTokenRefreshed);
+    window.addEventListener("auth:session-expired", onSessionExpired);
+
+    return () => {
+      window.removeEventListener("auth:token-refreshed", onTokenRefreshed);
+      window.removeEventListener("auth:session-expired", onSessionExpired);
+    };
+  }, []);
+
   const login = async (credentials: LoginCredentials) => {
     const response = await loginRequest(credentials);
     setUser(response.user);
