@@ -22,7 +22,9 @@ build/
 
 # Environment variables
 .env
-.env.*
+.env.local
+.env.*.local
+!.env.example
 
 # Editor files
 .vscode/
