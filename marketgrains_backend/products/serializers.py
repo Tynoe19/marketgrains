@@ -6,3 +6,8 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'  
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product.category.field.related_model  # Get the related model for the category field
+        fields = '__all__'
