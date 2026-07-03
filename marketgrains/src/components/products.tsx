@@ -32,7 +32,7 @@ export default function Products({ selected, search }: ProductsProps) {
   // .filter() creates a new array with only items that pass both checks
   const filtered = products.filter((product) => {
     const categoryMatch = selected
-      ? product.category.toLowerCase() === selected.toLowerCase()
+      ? String(product.category) === selected
       : true;
 
     const searchMatch = search
@@ -86,7 +86,7 @@ export default function Products({ selected, search }: ProductsProps) {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-green-700 capitalize">
-                    {product.category}
+                    {product.category_name}
                   </span>
                 </div>
 
