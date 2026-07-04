@@ -1,6 +1,6 @@
-from rest_framework import generics, permissions
-from .models import Category, Product
-from .serializers import CategorySerializer, ProductSerializer  
+from rest_framework import generics, permissions, viewsets
+from .models import Category, Product, Package
+from .serializers import CategorySerializer, ProductSerializer, PackageSerializer
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -46,3 +46,8 @@ class CategoryListCreateView(generics.ListCreateAPIView):
             return Category.objects.all()
 
         return Category.objects.filter(is_active=True)
+    
+class PackageViewSet(viewsets.ModelViewSet):
+    queryset = Package.objects.all().prefetch_related('products')
+    serializer_class = PackageSerializer
+    permission_classes = [IsAdminOrReadOnly]        

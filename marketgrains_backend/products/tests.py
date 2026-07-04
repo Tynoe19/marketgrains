@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from accounts.models import User
-from .models import Product
+from .models import Package, Product
 
 
 class ProductPermissionTests(APITestCase):
@@ -96,3 +96,25 @@ class ProductPermissionTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Product.objects.count(), 1)
+
+        def test_admin_can_create_package(self):
+            admin = User.objects.create_user(
+                username='admin1',
+                email='admin@example.com',  
+                password='strong-pass-123',
+                role='admin',
+            )
+            self.client.force_authenticate(user=admin)
+
+            response = self.client.post(reverse('package-list-create'), {
+                'name': 'Test Package',
+                'description': 'A test package.',
+                'order_value': '100.00',
+                'sales_value': '150.00',
+                'profit': '50.00',
+                'featured': True,
+                'products': [],
+            }, format='json')
+
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+            self.assertEqual(Package.objects.count(), 1)    
