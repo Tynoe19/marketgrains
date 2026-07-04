@@ -20,3 +20,4 @@ class PackageAdmin(admin.ModelAdmin):
     list_display = ('name', 'order_value', 'sales_value', 'profit', 'featured', 'is_active', 'created_at')
     list_filter = ('featured', 'is_active')
     search_fields = ('name',)
+    
