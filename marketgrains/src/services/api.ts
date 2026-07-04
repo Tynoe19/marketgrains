@@ -1,10 +1,5 @@
-/**
- * Base URL for Django API.
- * Empty string = mock auth mode (no backend required).
- *
- * When Django is ready, set in .env:
- *   VITE_API_URL=http://localhost:8000
- */
+
+
 import { logout, refreshAccessToken } from "./authService";
 
 const isAuthRoute = (path: string) =>
