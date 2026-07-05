@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,6 +28,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password':
                         {'write_only': True},
                         'email': {'required': True}}
+        
+    def validate_password(self, value):
+        try:
+            validate_password(value)
+        except DjangoValidationError as e:
+            raise serializers.ValidationError(list(e.messages))
+        return value
+    
+    def validate_role(self, value):
+        if value not in ['buyer', 'distributor']:
+            raise serializers.ValidationError('Role must be either "buyer" or "distributor".')
+        return value
 
     def validate_email(self, value):
         if User.objects.filter(email__iexact=value).exists():
