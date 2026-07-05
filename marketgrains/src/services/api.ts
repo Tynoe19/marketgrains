@@ -1,5 +1,4 @@
 
-
 import { logout, refreshAccessToken } from "./authService";
 
 const isAuthRoute = (path: string) =>
@@ -65,7 +64,19 @@ export async function apiFetch<T>(
     let message = "Something went wrong";
     try {
       const data = await response.json();
-      message = data.detail || data.message || data.non_field_errors?.[0] || message;
+      if(data.detail) {
+        message = data.detail;
+      } else if (data.message) {
+        message = data.message;
+      } else if (data.non_field_errors?.[0]) {
+        message = data.non_field_errors[0];
+      }
+      else {
+        const firstField = Object.keys(data)[0];
+        if (firstField && Array.isArray(data[firstField])){
+          message = data[firstField][0];
+        }
+      }
     } catch {
       // response wasn't JSON
     }
