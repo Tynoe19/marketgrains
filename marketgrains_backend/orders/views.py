@@ -28,3 +28,13 @@ class OrderListCreateView(generics.ListCreateAPIView):
         response = super().create(request, *args, **kwargs)
         response.data = OrderSerializer(self.created_order).data
         return response
+class OrderDetailView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        return (
+            Order.objects
+            .filter(customer=self.request.user)
+            .prefetch_related('items')
+        )
