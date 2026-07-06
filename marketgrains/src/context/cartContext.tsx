@@ -4,6 +4,7 @@ import {
   useState,
   useMemo,
   type ReactNode,
+  useEffect,
 } from "react";
 import type { Product } from "../types/products";
 import type { CartItem } from "../types/cart";
@@ -20,7 +21,17 @@ type CartContextType = {
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
 };
+const CART_STORAGE_KEY = "marketgrains_cart";
 
+function loadCartFromStorage(): CartItem[] {
+  try {
+    const storedCart = localStorage.getItem(CART_STORAGE_KEY);
+    return storedCart ? JSON.parse(storedCart) : [];
+  } catch (error) {
+    console.error("Failed to load cart from storage:", error);
+    return [];
+  }
+}
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 function parsePrice(price: string): number {
@@ -28,8 +39,12 @@ function parsePrice(price: string): number {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(loadCartFromStorage);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  }, [cart]);
 
   const cartCount = useMemo(
     () => cart.reduce((sum, item) => sum + item.quantity, 0),
