@@ -1,173 +1,74 @@
-# Elita07 grains market place
+# MarketGrains
 
-Elita07 is a full-stack web application for browsing and selling organic grain products. The frontend is built with React, TypeScript, and Vite, while the backend uses Django REST Framework with JWT authentication.
+A full-stack marketplace platform for buying and distributing grain products, built with a Django REST Framework backend and a React + TypeScript frontend.
 
-The project currently supports buyer and distributor accounts, product browsing, cart interactions, protected distributor routes, and token-based authentication.
+🔗 **Live app:** [https://marketgrains.vercel.app/]
 
-## Features
+![MarketGrains screenshot](./screenshot.png)
+<!-- Add a screenshot or GIF of the homepage/dashboard here -->
 
-- Buyer and distributor registration
-- Email/password login with JWT access and refresh tokens
-- Protected user session stored in local storage
-- Role-based navigation for distributor users
-- Product catalogue with organic grain products
-- Cart drawer and cart state management
-- Distributor dashboard for wholesale package visibility
-- Django REST API with custom user roles
-- Backend auth tests for register, login, invalid password, and authenticated `/me/`
+## Overview
+
+MarketGrains connects customers with grain distributors, offering:
+
+- Product and category browsing with an admin-managed catalog
+- Bundled product **packages** for bulk/distributor pricing
+- Cart with persistent storage across sessions
+- Role-based accounts (customer / distributor) with a dedicated distributor dashboard
+- Order placement and checkout flow
+- Token-based authentication with hardened password validation
 
 ## Tech Stack
 
-### Frontend
-
-- React 19
-- TypeScript
+**Frontend** (`/marketgrains`)
+- React 18 + TypeScript
 - Vite
 - React Router
-- React Icons
-- CSS/Tailwind-style utility classes
 
-### Backend
+**Backend** (`/marketgrains_backend`)
+- Django + Django REST Framework
+- PostgreSQL (hosted on [Neon](https://neon.tech))
+- Token-based authentication
 
-- Django 6
-- Django REST Framework
-- Simple JWT
-- SQLite for local development
-- django-cors-headers
+**Infrastructure**
+- Deployed on [Vercel](https://vercel.com) (frontend and backend as separate projects)
+- Neon serverless Postgres for the database
 
 ## Project Structure
 
-```text
+```
 marketgrains/
-├── marketgrains/                  # React frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── data/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── types/
-│   └── package.json
-├── marketgrains_backend/          # Django backend
-│   ├── accounts/
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── tests.py
-│   ├── marketgrains_backend/
-│   │   ├── settings.py
-│   │   └── urls.py
-│   ├── manage.py
-│   └── requirements.txt
-└── README.md
+├── marketgrains/           # React + TypeScript frontend
+├── marketgrains_backend/   # Django REST Framework backend
+└── README.md                # You are here
 ```
 
-## Getting Started
+Each half of the project has its own README with setup instructions:
 
-### Prerequisites
+- [`marketgrains/README.md`](./marketgrains/README.md) — Frontend setup
+- [`marketgrains_backend/README.md`](./marketgrains_backend/README.md) — Backend setup
 
-- Node.js and npm
-- Python 3
-- pip
+## Quick Start
 
-### Backend Setup
-
-From the repository root:
+Clone the repo, then set up each side independently:
 
 ```bash
-cd marketgrains_backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-```
-
-The backend runs at:
-
-```text
-http://localhost:8000
-```
-
-### Frontend Setup
-
-Open a second terminal from the repository root:
-
-```bash
+git clone https://github.com/Tynoe19/marketgrains.git
 cd marketgrains
-npm install
-npm run dev
 ```
 
-The frontend runs at:
+See the frontend and backend READMEs linked above for environment variables and run instructions.
 
-```text
-http://localhost:5173
-```
+## Deployment
 
-If Vite starts on a different port, update `CORS_ALLOWED_ORIGINS` in:
+Both the frontend and backend are deployed on Vercel as separate projects, connected to a shared Neon Postgres database. Environment variables (API URLs, database credentials, secret keys) are configured per-project in the Vercel dashboard rather than committed to the repo.
 
-```text
-marketgrains_backend/marketgrains_backend/settings.py
-```
+## Roadmap
 
-## Environment Variables
+- [ ] Payment integration
+- [ ] Order tracking for customers
+- [ ] Expanded distributor analytics
 
-The frontend reads the API base URL from:
+## Author
 
-```text
-VITE_API_URL=http://localhost:8000/api/
-```
-
-If this variable is not set, the current code falls back to:
-
-```text
-http://localhost:8000/api/
-```
-
-## API Endpoints
-
-Base path:
-
-```text
-/api/accounts/
-```
-
-Available auth endpoints:
-
-| Method | Endpoint | Description |
-| --- | --- | --- |
-| POST | `/register/` | Create an account and return JWT tokens |
-| POST | `/login/` | Login with email and password |
-| POST | `/refresh/` | Refresh an access token |
-| GET | `/me/` | Return the authenticated user |
-
-## Authentication Flow
-
-1. A user registers or logs in with email and password.
-2. The backend validates the credentials.
-3. The backend returns an access token, refresh token, and user object.
-4. The frontend stores the tokens and user in local storage.
-5. Protected API requests send the access token as a Bearer token.
-6. Role-based UI checks the user role, for example `buyer` or `distributor`.
-
-## Running Checks
-
-Backend tests:
-
-```bash
-./.venv/bin/python marketgrains_backend/manage.py test accounts
-```
-
-Frontend production build:
-
-```bash
-cd marketgrains
-npm run build
-```
-
-## Current Status
-
-MarketGrains is in active development. The core frontend experience and authentication flow are in place, with the next likely steps being product persistence, order management, payment flow, and deployment configuration.
-
+Built by [Tinotenda](https://github.com/Tynoe19) as a portfolio project.
