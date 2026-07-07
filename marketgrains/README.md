@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# MarketGrains
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack marketplace platform for buying and distributing grain products, built with a Django REST Framework backend and a React + TypeScript frontend.
 
-Currently, two official plugins are available:
+🔗 **Live app:** [https://marketgrains.vercel.app/]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![MarketGrains screenshot](./screenshot.png)
+<!-- Add a screenshot or GIF of the homepage/dashboard here -->
 
-## React Compiler
+## Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+MarketGrains connects customers with grain distributors, offering:
 
-## Expanding the ESLint configuration
+- Product and category browsing with an admin-managed catalog
+- Bundled product **packages** for bulk/distributor pricing
+- Cart with persistent storage across sessions
+- Role-based accounts (customer / distributor) with a dedicated distributor dashboard
+- Order placement and checkout flow
+- Token-based authentication with hardened password validation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Frontend** (`/marketgrains`)
+- React 18 + TypeScript
+- Vite
+- React Router
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Backend** (`/marketgrains_backend`)
+- Django + Django REST Framework
+- PostgreSQL (hosted on [Neon](https://neon.tech))
+- Token-based authentication
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**Infrastructure**
+- Deployed on [Vercel](https://vercel.com) (frontend and backend as separate projects)
+- Neon serverless Postgres for the database
+
+## Project Structure
+
+```
+marketgrains/
+├── marketgrains/           # React + TypeScript frontend
+├── marketgrains_backend/   # Django REST Framework backend
+└── README.md                # You are here
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Each half of the project has its own README with setup instructions:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- [`marketgrains/README.md`](./marketgrains/README.md) — Frontend setup
+- [`marketgrains_backend/README.md`](./marketgrains_backend/README.md) — Backend setup
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Quick Start
+
+Clone the repo, then set up each side independently:
+
+```bash
+git clone https://github.com/Tynoe19/marketgrains.git
+cd marketgrains
 ```
+
+See the frontend and backend READMEs linked above for environment variables and run instructions.
+
+## Deployment
+
+Both the frontend and backend are deployed on Vercel as separate projects, connected to a shared Neon Postgres database. Environment variables (API URLs, database credentials, secret keys) are configured per-project in the Vercel dashboard rather than committed to the repo.
+
+## Roadmap
+
+- [ ] Payment integration
+- [ ] Order tracking for customers
+- [ ] Expanded distributor analytics
+
+## Author
+
+Built by [Tinotenda](https://github.com/Tynoe19) as a portfolio project.
