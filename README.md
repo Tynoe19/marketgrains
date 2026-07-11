@@ -4,7 +4,8 @@ A full-stack marketplace platform for buying and distributing grain products, bu
 
 🔗 **Live app:** [https://marketgrains.vercel.app/]
 
-![MarketGrains screenshot](./screenshot.png)
+![MarketGrains screenshot](./<img width="585" height="1266" alt="image" src="https://github.com/user-attachments/assets/842abddb-dd9c-45e4-ad3b-48d3f40a75b6" />
+  .png)
 <!-- Add a screenshot or GIF of the homepage/dashboard here -->
 
 ## Overview
