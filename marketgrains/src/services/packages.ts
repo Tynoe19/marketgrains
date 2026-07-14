@@ -11,7 +11,7 @@ function mapPackageResponse(raw: PackageAPIResponse): Package {
         salesValue: parseFloat(raw.sales_value),
         profit: parseFloat(raw.profit),
         featured: raw.featured,
-        packageItems: raw.package_items?.map((item: PackageItemAPIResponse) => ({
+        packageItems: raw.package_items.map((item: PackageItemAPIResponse) => ({
             id: item.id,
             product: item.product,
             productName: item.product_name,
