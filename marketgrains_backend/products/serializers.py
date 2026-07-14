@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Package
+from .models import Product, Package, PackageItem
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -14,11 +14,16 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PackageSerializer(serializers.ModelSerializer):
-    products = serializers.SlugRelatedField(
-        many=True,
-        slug_field='name',
-        queryset=Product.objects.all()
-    )
+    class PackageItemSerializer(serializers.ModelSerializer):
+        product_name = serializers.CharField(source='product.name', read_only=True)  # Get the product name from the related Product model
+        class Meta:
+            model = PackageItem  # Get the related model for the package_items field
+            fields = ['id', 'product', 'product_name', 'quantity', 'product_weight']
+
+    
+    package_items = PackageItemSerializer(many=True, read_only=True)  # Use the related_name for the reverse relationship
+
+
     class Meta:
         model = Package
-        fields = ['id', 'name', 'description', 'order_value', 'sales_value', 'profit', 'featured', 'products']
+        fields = ['id', 'name', 'description', 'order_value', 'sales_value', 'profit', 'featured', 'is_active', 'created_at', 'package_items']  # Include the package_items field in the serialized output
