@@ -1,5 +1,5 @@
 import { apiFetch } from "./api";
-import type { Package, PackageAPIResponse,PackageItem, PackageItemAPIResponse } from "../types/packages";
+import type { Package, PackageAPIResponse, PackageItemAPIResponse } from "../types/packages";
 
 
 
