@@ -1,5 +1,5 @@
 import { apiFetch } from "./api";
-import type { Package, PackageAPIResponse } from "../types/packages";
+import type { Package, PackageAPIResponse,PackageItem, PackageItemAPIResponse } from "../types/packages";
 
 
 
@@ -11,7 +11,13 @@ function mapPackageResponse(raw: PackageAPIResponse): Package {
         salesValue: parseFloat(raw.sales_value),
         profit: parseFloat(raw.profit),
         featured: raw.featured,
-        products: raw.products,
+        packageItems: raw.package_items?.map((item: PackageItemAPIResponse) => ({
+            id: item.id,
+            product: item.product,
+            productName: item.product_name,
+            quantity: item.quantity,
+            productWeight: parseFloat(item.product_weight)
+        })) || [],
         description: raw.description
     };
 }

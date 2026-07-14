@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPackages } from "../services/packages";
-import type { Package } from "../types/packages";
+import type { Package, PackageItem, PackageAPIResponse, PackageItemAPIResponse } from "../types/packages";
 import { FiCheck } from "react-icons/fi";
 
 export default function Packages() {
@@ -75,10 +75,10 @@ export default function Packages() {
                 </div>
 
                 <ul className="space-y-2 mb-6">
-                  {pkg.products.map((product) => (
-                    <li key={product} className="flex items-center gap-2 text-sm text-gray-600">
+                  {pkg.packageItems.map((product) => (
+                    <li key={product.id} className="flex items-center gap-2 text-sm text-gray-600">
                       <FiCheck className="text-green-600 shrink-0" />
-                      {product}
+                      {product.productName} - {product.quantity} units ({product.productWeight} kg)
                     </li>
                   ))}
                 </ul>
