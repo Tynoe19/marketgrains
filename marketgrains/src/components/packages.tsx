@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPackages } from "../services/packages";
-import type { Package, PackageItem, PackageAPIResponse, PackageItemAPIResponse } from "../types/packages";
+import type { Package } from "../types/packages";
 import { FiCheck } from "react-icons/fi";
 
 export default function Packages() {
